@@ -42,7 +42,7 @@ const load = () => {
       return row.G > 0
     })
     .map(function(row){
-      return { text: row.Name, size: row.G}
+    return { text: row.Name, size: +row.G}
     })
     .sort(function(a,b) {
       return d3.descending(a.size, b.size)

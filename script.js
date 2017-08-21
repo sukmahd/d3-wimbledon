@@ -35,7 +35,7 @@ let redraw = (data) => {
 
   const yScale = d3.scaleLinear()
     .domain([0, d3.max(dataScore)])
-    .range([0, height + margin])
+    .range([height, 0])
 
   const xScale = d3.scaleLinear()
     .domain([0, dataScore.length])
@@ -58,15 +58,19 @@ let redraw = (data) => {
     .attr('x', (d,i) => {
       return xScale(i) + marginLeft - 10
     })
-    .attr('y', (d) => {
-      return height - yScale(d)
-    })
     .attr('width', function(d,i){
       return xScale(1) - 1
     })
     .attr('height', (d) => {
+      return height - yScale(d)
+    })
+    .attr('y', height)
+    .transition()
+    .duration(500)
+    .attr('y', function(d) {
       return yScale(d)
     })
+
 
     svg.append('g')
       .attr('class', 'axisStyle')
@@ -76,7 +80,6 @@ let redraw = (data) => {
     svg.append('g')
       .attr('transform', `translate(${marginLeft - 10}, ${height})`)
       .call(d3.axisBottom(xAxis).ticks(dataScore.length))
-
 
     //Word cloud
 
